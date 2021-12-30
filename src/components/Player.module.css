@@ -1,0 +1,97 @@
+.container {
+  background-color: grey;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: -1;
+}
+.simone {
+  background-color: black;
+  height: 90vw;
+  width: 90vw;
+  border-radius: 100%;
+  margin: 5vh;
+  z-index: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+button{
+  padding: 0;
+}
+.launchButton {
+  background-color: black;
+  color: bisque;
+  height: 40vw;
+  width: 40vw;
+  border-radius: 100%;
+  z-index: 2;
+  position: absolute;
+  top:40vh;
+  left:30vw;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 5vw;
+}
+.redButton {
+  background-color: red;
+  border-radius: 100% 0 0;
+  height: 40vw;
+  width: 40vw;
+  /* position: absolute;
+  top: 27.5vh;
+  right: 50vw; */
+  z-index: 1;
+  margin-top: 5vw;
+}
+.blueButton {
+  background-color: blue;
+  border-radius: 0 100%  0 0;
+  height: 40vw;
+  width: 40vw;
+  /* position: absolute;
+  top: 27.5vh;
+  left: 50vw; */
+  z-index: 1;
+  margin-top: 5vw;
+}
+.yellowButton {
+  background-color: yellow;
+  border-radius: 0 0 0 100%;
+  height: 40vw;
+  width: 40vw;
+  /* position: absolute;
+  bottom: 27.5vh;
+  right: 50vw; */
+  z-index: 1;
+  margin-bottom: 5vw;
+}
+.greenButton {
+  background-color: green;
+  border-radius: 0 0 100% 0;
+  height: 40vw;
+  width: 40vw;
+  /* position: absolute;
+  bottom: 27.5vh;
+  left: 50vw; */
+  z-index: 1;
+  margin-bottom: 5vw;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    flex-wrap: nowrap;
+  }
+  .simone {
+    height: 70vh;
+    width: 70vh;
+  }
+  .launchButton {
+    height: 30vh;
+    width: 30vh;
+    top:40vh;
+  }
+}

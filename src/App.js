@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-// import Buttons from './components/Buttons';
+import Header from './components/Header';
 import Player from './components/Player';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Buttons setGameTry={setGameTry} gameTry={gameTry} /> */}
+      <Header />
       <Player />
     </div>
   );

@@ -1,23 +1,6 @@
 import React, { useReducer, useEffect, useRef } from "react";
-import styles from './Player.module.css';
-
 
 const Player = () => {
-  
-    const turnInitialState = 0;
-    const turnReducer = (turnState, action) => {
-      switch (action.type) {
-        case 'PLAYERS_TURN':
-          return true
-        case 'SIMONES_TURN':
-          return false
-        case 'END_GAME':
-          return turnInitialState
-        default:
-          return turnState
-      }
-    };
-    const [turnState, turnDispatch] = useReducer(turnReducer, turnInitialState);
     
   const gameInitialState = [];
   const gameReducer = (gameState, action) => {
@@ -50,19 +33,6 @@ const Player = () => {
     }
   };
   const [playerState, playerDispatch] = useReducer(playerReducer, playerInitialState);
-  
-    const stepInitialState = 0;
-    const stepReducer = (stepState, action) => {
-      switch (action.type) {
-        case 'INCREASE_STEP':
-          return stepState+1
-        case 'RESET_STEP':
-          return stepInitialState
-        default:
-          return stepState
-      }
-    };
-    const [stepState, stepDispatch] = useReducer(stepReducer, stepInitialState);
 
   const countInitialState = 0;
   const countReducer = (countState, action) => {
@@ -79,23 +49,72 @@ const Player = () => {
 
   const bestRef = useRef(0);
 
+  // const bestInitialState = 0;
+  // const bestReducer = (bestState, action) => {
+  //   switch (action.type) {
+  //     case 'INCREASE_BEST':
+  //       return bestState+1
+  //     default:
+  //       return bestState
+  //   }
+  // };
+  // const [bestState, bestDispatch] = useReducer(bestReducer, bestInitialState);
+
+  const turnInitialState = 0;
+  const turnReducer = (turnState, action) => {
+    switch (action.type) {
+      case 'PLAYERS_TURN':
+        return true
+      case 'SIMONES_TURN':
+        return false
+      case 'END_GAME':
+        return turnInitialState
+      default:
+        return turnState
+    }
+  };
+  const [turnState, turnDispatch] = useReducer(turnReducer, turnInitialState);
+
+  const stepInitialState = 0;
+  const stepReducer = (stepState, action) => {
+    switch (action.type) {
+      case 'INCREASE_STEP':
+        return stepState+1
+      case 'RESET_STEP':
+        return stepInitialState
+      default:
+        return stepState
+    }
+  };
+  const [stepState, stepDispatch] = useReducer(stepReducer, stepInitialState);
+
+  const testChain = () => {
+    console.log(`Game : ${gameState}`);
+    console.log(`player : ${playerState}`);
+  }
+
   const launchGame = () => {
     if (turnState === 0) {
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
+      // console.log(gameState);
     };
   };
 
   useEffect(() => {
     console.log(gameState);
   }, [gameState])
+
   
   useEffect(() => {
     if (turnState === false) {
+      console.log(turnState);
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
     }
   }, [turnState])
+
+  let bestGame = 0;
 
   useEffect(() => {
     if (gameState.length > 0) {
@@ -132,22 +151,68 @@ const Player = () => {
           }
           playerDispatch({type:'RESET_PLAYER'});
           stepDispatch({type:'RESET_STEP'});
+          console.log(turnState);
         } 
       }
     }
   }, [playerState])
 
+  // const colorClick = (dispatchType) => {
+  //   if (turnState === true) {
+  //     playerDispatch(dispatchType);
+  //     console.log(playerState);
+  //     answer();
+  //   }
+  // }
+  
+  const answer = () => {
+      if (playerState.length < gameState.length) {
+        if (playerState[stepState] === gameState[stepState]) {
+          stepDispatch({type:'INCREASE_STEP'});
+          console.log('Yes. and ?');
+        } else {
+          gameDispatch({type:'RESET_GAME'});
+          stepDispatch({type:'RESET_STEP'});
+          playerDispatch({type:'RESET_PLAYER'});
+          console.log('Wrong answer - Game reset');
+        }
+      } else if (playerState.length === gameState.length) {
+        if (playerState[stepState] === gameState[stepState]) {
+          countDispatch({type:'INCREASE_COUNT'});
+          console.log('Good game - One more !');
+        } else {
+          gameDispatch({type:'RESET_GAME'});
+          console.log(`Too bad : 1 foot from the sangria bowl - Game reset`);
+        }
+        turnDispatch({type:'SIMONES_TURN'});
+        playerDispatch({type:'RESET_PLAYER'});
+        stepDispatch({type:'RESET_STEP'});
+      } 
+      // else {
+      //   turnDispatch({type:'SIMONES_TURN'});
+      //   playerDispatch({type:'RESET_PLAYER'})
+      //   countDispatch({type:'RESET_COUNT'});
+      //   stepDispatch({type:'RESET_STEP'});
+      // }
+  };
+
   return(
-    <div className={styles.container}>
-      <div className={styles.simone}>
-        <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
-        <button className={styles.redButton} onClick={() => playerDispatch({type:'RED_BUTTON'}) }>0</button>
-        <button className={styles.blueButton} onClick={() => playerDispatch({type:'BLUE_BUTTON'})}>1</button>
-        <button className={styles.yellowButton} onClick={() => playerDispatch({type:'YELLOW_BUTTON'})}>2</button>
-        <button className={styles.greenButton} onClick={() => playerDispatch({type:'GREEN_BUTTON'})}>3</button>
+    <div>
+      <button onClick={() => launchGame()}>START A GAME</button>
+      <div>
+        <button onClick={() => playerDispatch({type:'RED_BUTTON'}) }>0</button>
+        <button onClick={() => playerDispatch({type:'BLUE_BUTTON'})}>1</button>
+        <button onClick={() => playerDispatch({type:'YELLOW_BUTTON'})}>2</button>
+        <button onClick={() => playerDispatch({type:'GREEN_BUTTON'})}>3</button>
       </div>
-      <div className={styles.count}>Count : {countState}</div>
-      <div className={styles.best}>Best shot : {bestRef.current}</div>
+      <p>Count : {countState}</p>
+      <button 
+      onClick={() => testChain()}
+      >Is it correct ?</button>
+      <button 
+      onClick={() => answer()}
+      >Test</button>
+      <p>Best shot : {bestRef.current}</p>
     </div>
   )
 } 
