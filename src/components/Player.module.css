@@ -1,18 +1,23 @@
 .container {
-  background-color: grey;
-  height: 80vh;
+  background-color: #4d424d;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   z-index: -1;
 }
+.message {
+  height: 5vh;
+  margin: 1vh;
+  font-family: 'silkscreenbold';
+}
 .simone {
   background-color: black;
   height: 90vw;
   width: 90vw;
   border-radius: 100%;
-  margin: 5vh;
+  margin: 3vh;
   z-index: 0;
   display: flex;
   flex-wrap: wrap;
@@ -22,6 +27,9 @@
 }
 button{
   padding: 0;
+  height: 40vw;
+  width: 40vw;
+  border: solid #080708 2px;
   /* animation: light 1s;    */
 }
 button:active{
@@ -39,25 +47,29 @@ button:active{
   }
 }
 .launchButton {
+  border: solid #080708 0.5px;
   background-color: black;
   color: bisque;
-  height: 40vw;
-  width: 40vw;
+  /* height: 40vw;
+  width: 40vw; */
   border-radius: 100%;
   z-index: 100;
   position: absolute;
-  top:40vh;
-  left:30vw;
+  top:25vh;
+  bottom:24vh;
+  left:0;
+  right:0;
+  margin: auto;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 5vw;
   box-shadow: inset 10px 10px 10px rgb(59, 58, 58);
 }
 .redButton {
-  background-color: red;
+  background-color: #Fb33db;
   border-radius: 100% 0 0;
-  height: 40vw;
-  width: 40vw;
+  /* height: 40vw;
+  width: 40vw; */
   /* position: absolute;
   top: 27.5vh;
   right: 50vw; */
@@ -65,10 +77,10 @@ button:active{
   margin-top: 5vw;
 }
 .blueButton {
-  background-color: blue;
+  background-color: #01dee6;
   border-radius: 0 100%  0 0;
-  height: 40vw;
-  width: 40vw;
+  /* height: 40vw;
+  width: 40vw; */
   /* position: absolute;
   top: 27.5vh;
   left: 50vw; */
@@ -76,10 +88,10 @@ button:active{
   margin-top: 5vw;
 }
 .yellowButton {
-  background-color: yellow;
+  background-color: #fcf340;
   border-radius: 0 0 0 100%;
-  height: 40vw;
-  width: 40vw;
+  /* height: 40vw;
+  width: 40vw; */
   /* position: absolute;
   bottom: 27.5vh;
   right: 50vw; */
@@ -87,10 +99,10 @@ button:active{
   margin-bottom: 5vw;
 }
 .greenButton {
-  background-color: green;
+  background-color: #7fff00;
   border-radius: 0 0 100% 0;
-  height: 40vw;
-  width: 40vw;
+  /* height: 40vw;
+  width: 40vw; */
   /* position: absolute;
   bottom: 27.5vh;
   left: 50vw; */
@@ -100,21 +112,26 @@ button:active{
 
 .count {
   font-family: 'silkscreenbold';
+  margin: 2vh;
 }
 .best{
   font-family: 'silkscreenbold';
+  margin: 2vh;
 }
 @media screen and (min-width: 768px) {
   .container {
     flex-wrap: nowrap;
   }
   .simone {
-    height: 70vh;
-    width: 70vh;
+    height: 80vh;
+    width: 80vh;
+    margin: 2vh;
   }
   .launchButton {
-    height: 30vh;
-    width: 30vh;
-    top:40vh;
+    font-size: 2vw;
+  }
+  button{
+    height: 35vh;
+    width: 35vh;
   }
 }
