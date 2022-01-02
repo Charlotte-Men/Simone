@@ -18,9 +18,25 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 10px 10px 10px rgb(59, 58, 58);
 }
 button{
   padding: 0;
+  /* animation: light 1s;    */
+}
+button:active{
+  animation: light 1s;   
+}
+@keyframes light {
+  0% {
+    box-shadow: none;
+  }
+  10% {
+    box-shadow: inset 0px 0px 100px white;
+  }
+  100% {
+    box-shadow: none;
+  }
 }
 .launchButton {
   background-color: black;
@@ -28,13 +44,14 @@ button{
   height: 40vw;
   width: 40vw;
   border-radius: 100%;
-  z-index: 2;
+  z-index: 100;
   position: absolute;
   top:40vh;
   left:30vw;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 5vw;
+  box-shadow: inset 10px 10px 10px rgb(59, 58, 58);
 }
 .redButton {
   background-color: red;
@@ -81,6 +98,12 @@ button{
   margin-bottom: 5vw;
 }
 
+.count {
+  font-family: 'silkscreenbold';
+}
+.best{
+  font-family: 'silkscreenbold';
+}
 @media screen and (min-width: 768px) {
   .container {
     flex-wrap: nowrap;
