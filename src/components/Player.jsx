@@ -203,15 +203,19 @@ const Player = () => {
       <p className={styles.mainessage}>{mainMessage}</p>
       {message && <p className={styles.secondaryMessage}>{message}</p>}
       </div>
-      <div className={styles.simone}>
-        <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
-        <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
-        <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
-        <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
-        <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+      <div className={styles.secondaryContainer}>
+        <div className={styles.simone}>
+          <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
+          <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
+          <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
+          <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
+          <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+        </div>
+        <div className={styles.counters}>
+          <div className={styles.count}>Count : {countState}</div>
+          <div className={styles.best}>Best shot : {bestRef.current}</div>
+        </div>
       </div>
-      <div className={styles.count}>Count : {countState}</div>
-      <div className={styles.best}>Best shot : {bestRef.current}</div>
     </div>
   )
 } 
