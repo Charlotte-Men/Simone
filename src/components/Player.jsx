@@ -83,25 +83,56 @@ const Player = () => {
     if (turnState === 0) {
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
+      setMessage("Simone's Turn")
     };
   };
 
+  const flash = async () => {
+    for (let i=0; i<gameState.length; i++) {
+        await lightOn(gameState[i]);
+      }
+  };
+
   useEffect(() => {
-    console.log(gameState);
-    // for (let i=0; i<gameState.length; i++) {
-    //   lightOn(i);
-    // }
+    // console.log(gameState);
+    flash();
   }, [gameState])
-  
-  // const lightOn = (button) => {
-  //   return new Promise ((resolve, reject) =>{
-  //     button.classeName += ':active';
-  //     setTimeout(() => {
-  //       button.className = button.className.replace(':active', '');
-  //       resolve();
-  //     }, 1000);
-  //   });
-  // }
+   
+  const redButton = document.getElementById('redButton');
+  const blueButton = document.getElementById('blueButton');
+  const yellowButton = document.getElementById('yellowButton');
+  const greenButton = document.getElementById('greenButton');
+
+
+  const lightOn = (number) => {
+    let button = '';
+    switch (number) {
+      case 0:
+        button = redButton;
+        break;
+      case 1:
+        button = blueButton;
+        break;
+      case 2:
+        button = yellowButton;
+        break;
+      case 3:
+        button = greenButton;
+        break;
+      default:
+        break;
+    }
+    return new Promise ((resolve) =>{
+      setTimeout(() => {
+        button.className += ` ${styles['active']}`;
+        // resolve();
+      }, 250);
+      setTimeout(() => {
+        button.className = button.className.replace(` ${styles['active']}`, '');
+        resolve();
+      }, 750);
+    });
+  }
 
   useEffect(() => {
     if (turnState === false) {
@@ -115,12 +146,12 @@ const Player = () => {
   useEffect(() => {
     if (gameState.length > 0) {
       if (turnState === true) {
-        console.log(playerState);
+        // console.log(playerState);
         if (playerState.length < gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             stepDispatch({type:'INCREASE_STEP'});
-            console.log('Yes. and ?');
-            setMessage('Yes. and ?');
+            // console.log('Yes. and ?');
+            setMessage(`Yay ! ${gameState.length - stepState - 1} left`);
           } else {
             if (bestRef.current < countState) {
               bestRef.current = countState;
@@ -130,14 +161,14 @@ const Player = () => {
             playerDispatch({type:'RESET_PLAYER'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            console.log('Wrong answer - Game reset');
+            // console.log('Wrong answer - Game reset');
             setMessage('Wrong answer - Game reset');
           }
         } else if (playerState.length === gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             countDispatch({type:'INCREASE_COUNT'});
-            console.log('Good game - One more !');
-            setMessage('Good game - One more !');
+            // console.log('Good game - One more !');
+            setMessage("Good game - Simone's turn !");
             turnDispatch({type:'SIMONES_TURN'});
           } else {
             if (bestRef.current < countState) {
@@ -146,8 +177,8 @@ const Player = () => {
             gameDispatch({type:'RESET_GAME'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            console.log(`Too bad : 1 foot from the sangria bowl - Game reset`);
-            setMessage(`Too bad : 1 foot from the sangria bowl - Game reset`);
+            // console.log(`Too bad : 1 foot from the sangria bowl - Game reset`);
+            setMessage(`Too bad, you were close - Game reset`);
           }
           playerDispatch({type:'RESET_PLAYER'});
           stepDispatch({type:'RESET_STEP'});
@@ -167,10 +198,10 @@ const Player = () => {
       <p className={styles.message}>{message}</p>
       <div className={styles.simone}>
         <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
-        <button value={0} className={styles.redButton} onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
-        <button value={1} className={styles.blueButton} onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
-        <button value={2} className={styles.yellowButton} onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
-        <button value={3} className={styles.greenButton} onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+        <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
+        <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
+        <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
+        <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
       </div>
       <div className={styles.count}>Count : {countState}</div>
       <div className={styles.best}>Best shot : {bestRef.current}</div>
