@@ -81,29 +81,22 @@ const Player = () => {
 
   const launchGame = () => {
     if (turnState === 0) {
+      if (bestRef.current > 0) {
+        messageBox.className = messageBox.className.replace(` ${styles['wrong']}`, '');
+      }
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
-      setMessage("Simone's Turn")
+      setMainMessage("SIMONE'S TURN");
+      setMessage();
     };
   };
-
-  const flash = async () => {
-    for (let i=0; i<gameState.length; i++) {
-        await lightOn(gameState[i]);
-      }
-  };
-
-  useEffect(() => {
-    // console.log(gameState);
-    flash();
-  }, [gameState])
-   
+  
   const redButton = document.getElementById('redButton');
   const blueButton = document.getElementById('blueButton');
   const yellowButton = document.getElementById('yellowButton');
   const greenButton = document.getElementById('greenButton');
-
-
+  const messageBox = document.getElementById('messages');
+  
   const lightOn = (number) => {
     let button = '';
     switch (number) {
@@ -125,7 +118,6 @@ const Player = () => {
     return new Promise ((resolve) =>{
       setTimeout(() => {
         button.className += ` ${styles['active']}`;
-        // resolve();
       }, 250);
       setTimeout(() => {
         button.className = button.className.replace(` ${styles['active']}`, '');
@@ -133,6 +125,16 @@ const Player = () => {
       }, 750);
     });
   }
+  
+  const flash = async () => {
+    for (let i=0; i<gameState.length; i++) {
+        await lightOn(gameState[i]);
+      }
+  };
+
+  useEffect(() => {
+      flash();
+  }, [gameState])
 
   useEffect(() => {
     if (turnState === false) {
@@ -141,16 +143,16 @@ const Player = () => {
     }
   }, [turnState])
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState();
+  const [mainMessage, setMainMessage] = useState('');
 
   useEffect(() => {
     if (gameState.length > 0) {
       if (turnState === true) {
-        // console.log(playerState);
         if (playerState.length < gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             stepDispatch({type:'INCREASE_STEP'});
-            // console.log('Yes. and ?');
+            setMainMessage('YOUR TURN');
             setMessage(`Yay ! ${gameState.length - stepState - 1} left`);
           } else {
             if (bestRef.current < countState) {
@@ -161,14 +163,15 @@ const Player = () => {
             playerDispatch({type:'RESET_PLAYER'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            // console.log('Wrong answer - Game reset');
-            setMessage('Wrong answer - Game reset');
+            setMainMessage('GAME RESET');
+            setMessage('Wrong answer');
+            messageBox.className += ` ${styles['wrong']}`;
           }
         } else if (playerState.length === gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             countDispatch({type:'INCREASE_COUNT'});
-            // console.log('Good game - One more !');
-            setMessage("Good game - Simone's turn !");
+            setMainMessage("SIMONE'S TURN");
+            setMessage("Good game !");
             turnDispatch({type:'SIMONES_TURN'});
           } else {
             if (bestRef.current < countState) {
@@ -177,8 +180,9 @@ const Player = () => {
             gameDispatch({type:'RESET_GAME'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            // console.log(`Too bad : 1 foot from the sangria bowl - Game reset`);
-            setMessage(`Too bad, you were close - Game reset`);
+            setMainMessage('GAME RESET');
+            setMessage(`Too bad, you were close`);
+            messageBox.className += ` ${styles['wrong']}`;
           }
           playerDispatch({type:'RESET_PLAYER'});
           stepDispatch({type:'RESET_STEP'});
@@ -195,7 +199,10 @@ const Player = () => {
 
   return(
     <div className={styles.container}>
-      <p className={styles.message}>{message}</p>
+      <div className={styles.messages} id='messages'>
+      <p className={styles.mainessage}>{mainMessage}</p>
+      {message && <p className={styles.secondaryMessage}>{message}</p>}
+      </div>
       <div className={styles.simone}>
         <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
         <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>

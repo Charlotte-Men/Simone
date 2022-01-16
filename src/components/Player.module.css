@@ -7,10 +7,30 @@
   align-items: center;
   z-index: -1;
 }
-.message {
-  height: 5vh;
-  margin: 1vh;
+.messages {
+  height: 6vh;
+  width: 75vw;
+  margin: 2vh;
   font-family: 'silkscreenbold';
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: black;
+  color: bisque;
+  box-shadow: inset 5px 5px 5px rgb(59, 58, 58);
+}
+.messages p {
+  margin: 0;
+}
+/* .mainMessage {
+  font-family: 'Orbitron', sans-serif;
+} */
+.secondaryMessage {
+  font-size: small;
+}
+.wrong {
+  color: #fb336f;
+  box-shadow: #fb336f 1px 0 8px;
 }
 .simone {
   background-color: black;
@@ -30,7 +50,6 @@ button{
   height: 40vw;
   width: 40vw;
   border: solid #080708 2px;
-  /* animation: light 1s;    */
 }
 button:active{
   animation: light 1s;   
@@ -50,8 +69,6 @@ button:active{
   border: solid #080708 0.5px;
   background-color: black;
   color: bisque;
-  /* height: 40vw;
-  width: 40vw; */
   border-radius: 100%;
   z-index: 100;
   position: absolute;
@@ -67,59 +84,25 @@ button:active{
 }
 .redButton {
   background-color: #Fb33db;
-  /* background-color: #9e2089; */
   border-radius: 100% 0 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  top: 27.5vh;
-  right: 50vw; */
   z-index: 1;
   margin-top: 5vw;
 }
-/* #redButton:active, #blueButton:active, #yellowButton:active, #greenButton:active{
-  animation: light 0.5s;   
-} */
-/* #redButtonActive {
-  background-color: #Fb33db;
-  border-radius: 100% 0 0;
-  z-index: 1;
-  margin-top: 5vw;
-  animation: light 0.5s;   
-} */
 .blueButton {
   background-color: #01dee6;
-  /* background-color: #07898d; */
   border-radius: 0 100%  0 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  top: 27.5vh;
-  left: 50vw; */
   z-index: 1;
   margin-top: 5vw;
 }
 .yellowButton {
   background-color: #fcf340;
-  /* background-color: #a09a28; */
   border-radius: 0 0 0 100%;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  bottom: 27.5vh;
-  right: 50vw; */
   z-index: 1;
   margin-bottom: 5vw;
 }
 .greenButton {
   background-color: #7fff00;
-  /* background-color: #468a03; */
   border-radius: 0 0 100% 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  bottom: 27.5vh;
-  left: 50vw; */
   z-index: 1;
   margin-bottom: 5vw;
 }
