@@ -2,7 +2,6 @@
     font-family: 'silkscreenbold';
     src: url('slkscrb-webfont.eot');
     src: url('slkscrb-webfont.eot?#iefix') format('embedded-opentype'),
-         url('slkscrb-webfont.woff2') format('woff2'),
          url('slkscrb-webfont.woff') format('woff'),
          url('slkscrb-webfont.ttf') format('truetype'),
          url('slkscrb-webfont.svg#silkscreenbold') format('svg');
@@ -15,7 +14,6 @@
     font-family: 'silkscreen_expandednormal';
     src: url('slkscre-webfont.eot');
     src: url('slkscre-webfont.eot?#iefix') format('embedded-opentype'),
-         url('slkscre-webfont.woff2') format('woff2'),
          url('slkscre-webfont.woff') format('woff'),
          url('slkscre-webfont.ttf') format('truetype'),
          url('slkscre-webfont.svg#silkscreen_expandednormal') format('svg');
@@ -28,7 +26,6 @@
     font-family: 'silkscreen_expandedbold';
     src: url('slkscreb-webfont.eot');
     src: url('slkscreb-webfont.eot?#iefix') format('embedded-opentype'),
-         url('slkscreb-webfont.woff2') format('woff2'),
          url('slkscreb-webfont.woff') format('woff'),
          url('slkscreb-webfont.ttf') format('truetype'),
          url('slkscreb-webfont.svg#silkscreen_expandedbold') format('svg');
@@ -41,7 +38,6 @@
     font-family: 'silkscreennormal';
     src: url('slkscr-webfont.eot');
     src: url('slkscr-webfont.eot?#iefix') format('embedded-opentype'),
-         url('slkscr-webfont.woff2') format('woff2'),
          url('slkscr-webfont.woff') format('woff'),
          url('slkscr-webfont.ttf') format('truetype'),
          url('slkscr-webfont.svg#silkscreennormal') format('svg');
