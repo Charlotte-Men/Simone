@@ -6,9 +6,27 @@
   font-size: 80px;
   text-shadow: #01dee6 1px 0 8px;
 }
-
+.disclaimer1, .disclaimer2 {
+  display: none;
+}
 @media screen and (min-width: 768px) {
   .headerContainer {
     font-size: 85px;
+  }
+  .disclaimer1, .disclaimer2 {
+    display: block;
+    position: absolute;
+    height: 100vh;
+    width: 25vw;
+    top: 0;
+    background-image: url('../../public/prettierOnYourPhone.png');
+    background-size: cover;
+    opacity: 0.3;
+  }
+  .disclaimer1 {
+    left: 0;
+  }
+  .disclaimer2 {
+    right: 0;
   }
 }

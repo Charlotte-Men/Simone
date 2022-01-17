@@ -123,6 +123,21 @@ button:active{
   font-family: 'silkscreenbold';
   margin: 2vh;
 }
+.better {
+  /* text-shadow: #7fff00 1px 0 8px; */
+  animation: neon 0.7s infinite;   
+}
+@keyframes neon {
+  0% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: #fcf340 1px 0 8px;
+  }
+  100% {
+    text-shadow: none;
+  }
+}
 .active {
   animation: light 0.75s;  
   background-color: #4d424d; 
@@ -155,6 +170,6 @@ button:active{
   .counters {
     position: absolute;
     top: 30vh;
-    right: 5vw;
+    right: 2vw;
   }
 }

@@ -79,38 +79,39 @@ const Player = () => {
 
   const bestRef = useRef(0);
 
+  const [message, setMessage] = useState();
+  const [mainMessage, setMainMessage] = useState('');
+ 
+  const messageBox = document.getElementById('messages');
+  const bestShot = document.getElementById('best');
+  
   const launchGame = () => {
     if (turnState === 0) {
       if (bestRef.current > 0) {
         messageBox.className = messageBox.className.replace(` ${styles['wrong']}`, '');
+        bestShot.className = bestShot.className.replace(` ${styles['better']}`, '');
       }
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
-      setMainMessage("SIMONE'S TURN");
-      setMessage();
+      setMainMessage("YOUR TURN");
+      setMessage('');
     };
   };
-  
-  const redButton = document.getElementById('redButton');
-  const blueButton = document.getElementById('blueButton');
-  const yellowButton = document.getElementById('yellowButton');
-  const greenButton = document.getElementById('greenButton');
-  const messageBox = document.getElementById('messages');
-  
+ 
   const lightOn = (number) => {
     let button = '';
     switch (number) {
       case 0:
-        button = redButton;
+        button = document.getElementById('redButton');
         break;
       case 1:
-        button = blueButton;
+        button = document.getElementById('blueButton');
         break;
       case 2:
-        button = yellowButton;
+        button = document.getElementById('yellowButton');
         break;
       case 3:
-        button = greenButton;
+        button = document.getElementById('greenButton');
         break;
       default:
         break;
@@ -126,13 +127,15 @@ const Player = () => {
     });
   }
   
-  const flash = async () => {
-    for (let i=0; i<gameState.length; i++) {
-        await lightOn(gameState[i]);
-      }
-  };
-
   useEffect(() => {
+    const flash = async () => {
+      for (let i=0; i<gameState.length; i++) {
+          await lightOn(gameState[i]);
+        }
+      if (countState !== 0) {
+        setMainMessage("YOUR TURN");
+      }
+    };
       flash();
   }, [gameState])
 
@@ -143,20 +146,17 @@ const Player = () => {
     }
   }, [turnState])
 
-  const [message, setMessage] = useState();
-  const [mainMessage, setMainMessage] = useState('');
-
   useEffect(() => {
     if (gameState.length > 0) {
       if (turnState === true) {
         if (playerState.length < gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             stepDispatch({type:'INCREASE_STEP'});
-            setMainMessage('YOUR TURN');
             setMessage(`Yay ! ${gameState.length - stepState - 1} left`);
           } else {
             if (bestRef.current < countState) {
               bestRef.current = countState;
+              bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
             stepDispatch({type:'RESET_STEP'});
@@ -176,12 +176,13 @@ const Player = () => {
           } else {
             if (bestRef.current < countState) {
               bestRef.current = countState;
+              bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
             setMainMessage('GAME RESET');
-            setMessage(`Too bad, you were close`);
+            setMessage(`Too bad, you were close !`);
             messageBox.className += ` ${styles['wrong']}`;
           }
           playerDispatch({type:'RESET_PLAYER'});
@@ -213,7 +214,7 @@ const Player = () => {
         </div>
         <div className={styles.counters}>
           <div className={styles.count}>Count : {countState}</div>
-          <div className={styles.best}>Best shot : {bestRef.current}</div>
+          <div className={styles.best} id='best'>Best shot : {bestRef.current}</div>
         </div>
       </div>
     </div>
