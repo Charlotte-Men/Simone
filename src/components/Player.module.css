@@ -7,17 +7,41 @@
   align-items: center;
   z-index: -1;
 }
-.message {
-  height: 5vh;
-  margin: 1vh;
+.messages {
+  height: 6vh;
+  width: 75vw;
+  margin: 2vh;
   font-family: 'silkscreenbold';
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: black;
+  color: bisque;
+  box-shadow: inset 5px 5px 5px rgb(59, 58, 58);
+}
+.messages p {
+  margin: 0;
+}
+/* .mainMessage {
+  font-family: 'Orbitron', sans-serif;
+} */
+.secondaryMessage {
+  font-size: small;
+}
+.wrong {
+  color: #fb336f;
+  box-shadow: #fb336f 1px 0 8px;
+}
+.secondaryContainer {
+  display: flex;
+  flex-direction: column;
 }
 .simone {
   background-color: black;
-  height: 90vw;
-  width: 90vw;
+  height: 40vh;
+  width: 40vh;
   border-radius: 100%;
-  margin: 3vh;
+  margin: 2vh 0;
   z-index: 0;
   display: flex;
   flex-wrap: wrap;
@@ -27,10 +51,9 @@
 }
 button{
   padding: 0;
-  height: 40vw;
-  width: 40vw;
+  height: 18vh;
+  width: 18vh;
   border: solid #080708 2px;
-  /* animation: light 1s;    */
 }
 button:active{
   animation: light 1s;   
@@ -50,66 +73,48 @@ button:active{
   border: solid #080708 0.5px;
   background-color: black;
   color: bisque;
-  /* height: 40vw;
-  width: 40vw; */
   border-radius: 100%;
   z-index: 100;
   position: absolute;
-  top:25vh;
+  top:38vh;
   bottom:24vh;
   left:0;
   right:0;
-  margin: auto;
+  margin: 0 auto;
   font-family: 'Orbitron', sans-serif;
   font-weight: 900;
-  font-size: 5vw;
+  font-size: 20px;
   box-shadow: inset 10px 10px 10px rgb(59, 58, 58);
 }
 .redButton {
   background-color: #Fb33db;
   border-radius: 100% 0 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  top: 27.5vh;
-  right: 50vw; */
   z-index: 1;
-  margin-top: 5vw;
+  margin-top: 2vh;
 }
 .blueButton {
   background-color: #01dee6;
   border-radius: 0 100%  0 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  top: 27.5vh;
-  left: 50vw; */
   z-index: 1;
-  margin-top: 5vw;
+  margin-top: 2vh;
 }
 .yellowButton {
   background-color: #fcf340;
   border-radius: 0 0 0 100%;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  bottom: 27.5vh;
-  right: 50vw; */
   z-index: 1;
-  margin-bottom: 5vw;
+  margin-bottom: 2vh;
 }
 .greenButton {
   background-color: #7fff00;
   border-radius: 0 0 100% 0;
-  /* height: 40vw;
-  width: 40vw; */
-  /* position: absolute;
-  bottom: 27.5vh;
-  left: 50vw; */
   z-index: 1;
-  margin-bottom: 5vw;
+  margin-bottom: 2vh;
 }
-
+.counters {
+  margin: 5vh;
+  border: solid #080708 2px;
+  background-color: #615461;
+}
 .count {
   font-family: 'silkscreenbold';
   margin: 2vh;
@@ -118,20 +123,53 @@ button:active{
   font-family: 'silkscreenbold';
   margin: 2vh;
 }
+.better {
+  /* text-shadow: #7fff00 1px 0 8px; */
+  animation: neon 0.7s infinite;   
+}
+@keyframes neon {
+  0% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: #fcf340 1px 0 8px;
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+.active {
+  animation: light 0.75s;  
+  background-color: #4d424d; 
+}
 @media screen and (min-width: 768px) {
   .container {
     flex-wrap: nowrap;
   }
+  .secondaryContainer {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .messages {
+    width: 40vw;
+  }
   .simone {
-    height: 80vh;
-    width: 80vh;
-    margin: 2vh;
+    height: 60vh;
+    width: 60vh;
+    margin: 2vh 0;
   }
   .launchButton {
-    font-size: 2vw;
+    top: 43vh;
+    font-size: 25px;
   }
   button{
-    height: 35vh;
-    width: 35vh;
+    height: 28vh;
+    width: 28vh;
+  }
+  .counters {
+    position: absolute;
+    top: 30vh;
+    right: 2vw;
   }
 }

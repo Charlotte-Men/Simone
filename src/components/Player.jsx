@@ -79,29 +79,65 @@ const Player = () => {
 
   const bestRef = useRef(0);
 
+  const [message, setMessage] = useState();
+  const [mainMessage, setMainMessage] = useState('');
+ 
+  const messageBox = document.getElementById('messages');
+  const bestShot = document.getElementById('best');
+  
   const launchGame = () => {
     if (turnState === 0) {
+      if (bestRef.current > 0) {
+        messageBox.className = messageBox.className.replace(` ${styles['wrong']}`, '');
+        bestShot.className = bestShot.className.replace(` ${styles['better']}`, '');
+      }
       gameDispatch({type:'NEXT_LEVEL'});
       turnDispatch({type:'PLAYERS_TURN'});
+      setMainMessage("YOUR TURN");
+      setMessage('');
     };
   };
-
-  useEffect(() => {
-    console.log(gameState);
-    // for (let i=0; i<gameState.length; i++) {
-    //   lightOn(i);
-    // }
-  }, [gameState])
+ 
+  const lightOn = (number) => {
+    let button = '';
+    switch (number) {
+      case 0:
+        button = document.getElementById('redButton');
+        break;
+      case 1:
+        button = document.getElementById('blueButton');
+        break;
+      case 2:
+        button = document.getElementById('yellowButton');
+        break;
+      case 3:
+        button = document.getElementById('greenButton');
+        break;
+      default:
+        break;
+    }
+    return new Promise ((resolve) =>{
+      setTimeout(() => {
+        button.className += ` ${styles['active']}`;
+      }, 250);
+      setTimeout(() => {
+        button.className = button.className.replace(` ${styles['active']}`, '');
+        resolve();
+      }, 750);
+    });
+  }
   
-  // const lightOn = (button) => {
-  //   return new Promise ((resolve, reject) =>{
-  //     button.classeName += ':active';
-  //     setTimeout(() => {
-  //       button.className = button.className.replace(':active', '');
-  //       resolve();
-  //     }, 1000);
-  //   });
-  // }
+  useEffect(() => {
+    const flash = async () => {
+      for (let i=0; i<gameState.length; i++) {
+          await lightOn(gameState[i]);
+        }
+      if (countState !== 0) {
+        setMainMessage("YOUR TURN");
+      }
+    };
+      flash();
+  }, [gameState])
 
   useEffect(() => {
     if (turnState === false) {
@@ -110,44 +146,44 @@ const Player = () => {
     }
   }, [turnState])
 
-  const [message, setMessage] = useState('');
-
   useEffect(() => {
     if (gameState.length > 0) {
       if (turnState === true) {
-        console.log(playerState);
         if (playerState.length < gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             stepDispatch({type:'INCREASE_STEP'});
-            console.log('Yes. and ?');
-            setMessage('Yes. and ?');
+            setMessage(`Yay ! ${gameState.length - stepState - 1} left`);
           } else {
             if (bestRef.current < countState) {
               bestRef.current = countState;
+              bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
             stepDispatch({type:'RESET_STEP'});
             playerDispatch({type:'RESET_PLAYER'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            console.log('Wrong answer - Game reset');
-            setMessage('Wrong answer - Game reset');
+            setMainMessage('GAME RESET');
+            setMessage('Wrong answer');
+            messageBox.className += ` ${styles['wrong']}`;
           }
         } else if (playerState.length === gameState.length) {
           if (playerState[stepState] === gameState[stepState]) {
             countDispatch({type:'INCREASE_COUNT'});
-            console.log('Good game - One more !');
-            setMessage('Good game - One more !');
+            setMainMessage("SIMONE'S TURN");
+            setMessage("Good game !");
             turnDispatch({type:'SIMONES_TURN'});
           } else {
             if (bestRef.current < countState) {
               bestRef.current = countState;
+              bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
             turnDispatch({type:'END_GAME'});
             countDispatch({type:'RESET_COUNT'});
-            console.log(`Too bad : 1 foot from the sangria bowl - Game reset`);
-            setMessage(`Too bad : 1 foot from the sangria bowl - Game reset`);
+            setMainMessage('GAME RESET');
+            setMessage(`Too bad, you were close !`);
+            messageBox.className += ` ${styles['wrong']}`;
           }
           playerDispatch({type:'RESET_PLAYER'});
           stepDispatch({type:'RESET_STEP'});
@@ -164,16 +200,23 @@ const Player = () => {
 
   return(
     <div className={styles.container}>
-      <p className={styles.message}>{message}</p>
-      <div className={styles.simone}>
-        <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
-        <button value={0} className={styles.redButton} onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
-        <button value={1} className={styles.blueButton} onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
-        <button value={2} className={styles.yellowButton} onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
-        <button value={3} className={styles.greenButton} onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+      <div className={styles.messages} id='messages'>
+      <p className={styles.mainessage}>{mainMessage}</p>
+      {message && <p className={styles.secondaryMessage}>{message}</p>}
       </div>
-      <div className={styles.count}>Count : {countState}</div>
-      <div className={styles.best}>Best shot : {bestRef.current}</div>
+      <div className={styles.secondaryContainer}>
+        <div className={styles.simone}>
+          <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
+          <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
+          <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
+          <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
+          <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+        </div>
+        <div className={styles.counters}>
+          <div className={styles.count}>Count : {countState}</div>
+          <div className={styles.best} id='best'>Best shot : {bestRef.current}</div>
+        </div>
+      </div>
     </div>
   )
 } 
