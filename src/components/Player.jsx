@@ -1,22 +1,13 @@
 import React, { useReducer, useEffect, useRef, useState } from "react";
+
+import turnReducer from "../reducers/turnReducer";
+
 import styles from './Player.module.css';
 
+const turnInitialState = 0;
 
 const Player = () => {
-  
-  const turnInitialState = 0;
-  const turnReducer = (turnState, action) => {
-    switch (action.type) {
-      case 'PLAYERS_TURN':
-        return true
-      case 'SIMONES_TURN':
-        return false
-      case 'END_GAME':
-        return turnInitialState
-      default:
-        return turnState
-    }
-  };
+
   const [turnState, turnDispatch] = useReducer(turnReducer, turnInitialState);
     
   const gameInitialState = [];
@@ -161,7 +152,7 @@ const Player = () => {
             gameDispatch({type:'RESET_GAME'});
             stepDispatch({type:'RESET_STEP'});
             playerDispatch({type:'RESET_PLAYER'});
-            turnDispatch({type:'END_GAME'});
+            turnDispatch({type:'END_GAME', payload: turnInitialState});
             countDispatch({type:'RESET_COUNT'});
             setMainMessage('GAME RESET');
             setMessage('Wrong answer');
@@ -179,7 +170,7 @@ const Player = () => {
               bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
-            turnDispatch({type:'END_GAME'});
+            turnDispatch({type:'END_GAME', payload: turnInitialState});
             countDispatch({type:'RESET_COUNT'});
             setMainMessage('GAME RESET');
             setMessage(`Too bad, you were close !`);
