@@ -1,80 +1,25 @@
 import React, { useReducer, useEffect, useRef, useState } from "react";
+
+import turnReducer from "../reducers/turnReducer";
+import gameReducer from "../reducers/gameReducer";
+import playerReducer from "../reducers/playerReducer";
+import stepReducer from "../reducers/stepReducer";
+import countReducer from "../reducers/countReducer";
+
 import styles from './Player.module.css';
 
+const turnInitialState = 0;
+const gameInitialState = [];
+const playerInitialState = [];
+const stepInitialState = 0;
+const countInitialState = 0;
 
 const Player = () => {
-  
-  const turnInitialState = 0;
-  const turnReducer = (turnState, action) => {
-    switch (action.type) {
-      case 'PLAYERS_TURN':
-        return true
-      case 'SIMONES_TURN':
-        return false
-      case 'END_GAME':
-        return turnInitialState
-      default:
-        return turnState
-    }
-  };
+
   const [turnState, turnDispatch] = useReducer(turnReducer, turnInitialState);
-    
-  const gameInitialState = [];
-  const gameReducer = (gameState, action) => {
-    switch (action.type) {
-      case 'NEXT_LEVEL':
-        return [...gameState, Math.floor(Math.random() * 4)]
-      case 'RESET_GAME':
-        return []
-      default:
-        return gameState
-    }
-  };
   const [gameState, gameDispatch] = useReducer(gameReducer, gameInitialState);
-
-  const playerInitialState = [];
-  const playerReducer = (playerState, action) => {
-    switch (action.type) {
-      case 'RED_BUTTON':
-        return [...playerState, 0]
-      case 'BLUE_BUTTON':
-        return [...playerState, 1]
-      case 'YELLOW_BUTTON':
-        return [...playerState, 2]
-      case 'GREEN_BUTTON':
-        return [...playerState, 3]
-      case 'RESET_PLAYER':
-        return []
-      default:
-        return playerState
-    }
-  };
   const [playerState, playerDispatch] = useReducer(playerReducer, playerInitialState);
-  
-  const stepInitialState = 0;
-  const stepReducer = (stepState, action) => {
-    switch (action.type) {
-      case 'INCREASE_STEP':
-        return stepState+1
-      case 'RESET_STEP':
-        return stepInitialState
-      default:
-        return stepState
-    }
-  };
   const [stepState, stepDispatch] = useReducer(stepReducer, stepInitialState);
-
-  const countInitialState = 0;
-  const countReducer = (countState, action) => {
-    switch (action.type) {
-      case 'INCREASE_COUNT':
-        return countState+1
-      case 'RESET_COUNT':
-        return countInitialState
-      default:
-        return countState
-    }
-  };
   const [countState, countDispatch] = useReducer(countReducer, countInitialState);
 
   const bestRef = useRef(0);
@@ -159,10 +104,10 @@ const Player = () => {
               bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
-            stepDispatch({type:'RESET_STEP'});
+            stepDispatch({type:'RESET_STEP', payload: stepInitialState});
             playerDispatch({type:'RESET_PLAYER'});
-            turnDispatch({type:'END_GAME'});
-            countDispatch({type:'RESET_COUNT'});
+            turnDispatch({type:'END_GAME', payload: turnInitialState});
+            countDispatch({type:'RESET_COUNT', payload: countInitialState});
             setMainMessage('GAME RESET');
             setMessage('Wrong answer');
             messageBox.className += ` ${styles['wrong']}`;
@@ -179,14 +124,14 @@ const Player = () => {
               bestShot.className += ` ${styles['better']}`;
             }
             gameDispatch({type:'RESET_GAME'});
-            turnDispatch({type:'END_GAME'});
-            countDispatch({type:'RESET_COUNT'});
+            turnDispatch({type:'END_GAME', payload: turnInitialState});
+            countDispatch({type:'RESET_COUNT', payload: countInitialState});
             setMainMessage('GAME RESET');
             setMessage(`Too bad, you were close !`);
             messageBox.className += ` ${styles['wrong']}`;
           }
           playerDispatch({type:'RESET_PLAYER'});
-          stepDispatch({type:'RESET_STEP'});
+          stepDispatch({type:'RESET_STEP', payload: stepInitialState});
         } 
       }
     }
