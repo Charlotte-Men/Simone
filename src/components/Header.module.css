@@ -19,7 +19,7 @@
     height: 100vh;
     width: 25vw;
     top: 0;
-    background-image: url('../../public/prettierOnYourPhone.png');
+    background-image: url('../assets/prettierOnYourPhone.png');
     background-size: cover;
     opacity: 0.3;
   }

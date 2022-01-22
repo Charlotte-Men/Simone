@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useRef, useState } from "react";
+import useSound from 'use-sound';
 
 import turnReducer from "../reducers/turnReducer";
 import gameReducer from "../reducers/gameReducer";
@@ -6,6 +7,10 @@ import playerReducer from "../reducers/playerReducer";
 import stepReducer from "../reducers/stepReducer";
 import countReducer from "../reducers/countReducer";
 
+import beep1 from '../assets/bleep-902.wav';
+import beep2 from '../assets/bleep-903.wav';
+import beep3 from '../assets/break-2947.wav';
+import beep4 from '../assets/pop-3069.wav';
 import styles from './Player.module.css';
 
 const turnInitialState = 0;
@@ -15,6 +20,7 @@ const stepInitialState = 0;
 const countInitialState = 0;
 
 const Player = () => {
+  const [play] = useSound();
 
   const [turnState, turnDispatch] = useReducer(turnReducer, turnInitialState);
   const [gameState, gameDispatch] = useReducer(gameReducer, gameInitialState);
@@ -45,18 +51,23 @@ const Player = () => {
  
   const lightOn = (number) => {
     let button = '';
+    let gameBeep = '';
     switch (number) {
       case 0:
         button = document.getElementById('redButton');
+        gameBeep = beep1;
         break;
       case 1:
         button = document.getElementById('blueButton');
+        gameBeep = beep2;
         break;
       case 2:
         button = document.getElementById('yellowButton');
+        gameBeep = beep3;
         break;
       case 3:
         button = document.getElementById('greenButton');
+        gameBeep = beep4;
         break;
       default:
         break;
@@ -64,6 +75,8 @@ const Player = () => {
     return new Promise ((resolve) =>{
       setTimeout(() => {
         button.className += ` ${styles['active']}`;
+        play(gameBeep);
+        play(gameBeep);
       }, 250);
       setTimeout(() => {
         button.className = button.className.replace(` ${styles['active']}`, '');
@@ -137,9 +150,10 @@ const Player = () => {
     }
   }, [playerState])
 
-  const handleClick = (color) => {
+  const handleClick = (color, sound) => {
     if (turnState === true) {
-      playerDispatch(color)
+      playerDispatch(color);
+      play(sound);
     }
   }
 
@@ -152,10 +166,10 @@ const Player = () => {
       <div className={styles.secondaryContainer}>
         <div className={styles.simone}>
           <button className={styles.launchButton} onClick={() => launchGame()}>START A GAME</button>
-          <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}) }></button>
-          <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'})}></button>
-          <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'})}></button>
-          <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'})}></button>
+          <button value={0} className={styles.redButton} id='redButton' onClick={() => handleClick({type:'RED_BUTTON'}, beep1) }></button>
+          <button value={1} className={styles.blueButton} id='blueButton' onClick={() => handleClick({type:'BLUE_BUTTON'}, beep2)}></button>
+          <button value={2} className={styles.yellowButton} id='yellowButton' onClick={() => handleClick({type:'YELLOW_BUTTON'}, beep3)}></button>
+          <button value={3} className={styles.greenButton} id='greenButton' onClick={() => handleClick({type:'GREEN_BUTTON'}, beep4)}></button>
         </div>
         <div className={styles.counters}>
           <div className={styles.count}>Count : {countState}</div>
