@@ -56,7 +56,7 @@ button{
   border: solid #080708 2px;
 }
 button:active{
-  animation: light 1s;   
+  animation: light 0.75s;   
 }
 @keyframes light {
   0% {
