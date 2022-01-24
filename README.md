@@ -6,7 +6,7 @@ You can see it deployed [here](https://simone-game.herokuapp.com/)
 
 ### Goal
 
-I wanted to code something by myself, using as much React hooks as possible :gear: :gear: :hook:  
+I wanted to code something by myself, using as much React hooks as possible :gear: :gear: :gear:  
 
 I was motivated by the algorithm challenge and the retro look of Simon game !
 
